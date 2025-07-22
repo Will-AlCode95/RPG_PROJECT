@@ -19,6 +19,7 @@ def criar_npc(level):
         "level": level,
         "dano": 5 * level,  # dano do monstro varia de acordo ao level
         "hp": 100 * level,
+        "hp_max": 100 * level,
         "exp": 7 * level,
     }
 
@@ -36,19 +37,28 @@ def exibir_npcs():
     print(
         f"Nome: {npc['nome']} | Level: {npc['level']} | Dano: {npc['dano']} | HP: {npc['hp']} |  EXP: {npc["exp"]}")
 
+
+def iniciar_batalha(npc):
+   while player["hp"] > 0 and npc["hp"] > 0:
+       atacar_npc(npc)
+       atacar_player(npc)
+       exibir_info_batalha(npc)
+
+    if player["hp"] > 0:
+  
+
 def atacar_npc(npc):
-    npc["hp"] -= player["dano"] # hp inimigo - dano do player
+    npc["hp"] = npc["hp"] - player["dano"]
+
+def atacar_player(npc):
+    player["hp"] = player["hp"] - npc["dano"]
+
+def exibir_info_batalha(npc):
+   print(f"Player: {player["nome"]} Sofreu um ataque! | HP: {player['hp']} | {player['hp_max']}")
+   print(f"NPC: {npc["nome"]} Sofreu um ataque! {npc["hp"]} | {npc["hp_max"]}")
 
 gerar_npcs(5)
-exibir_npcs()
+#exibir_npcs()
 
 npc_selecionado = lista_npcs[0]
-
-print("NPC selecionado:", npc_selecionado)
-atacar_npc(npc_selecionado)
-
-print("NPC sofreu ataque:", npc_selecionado)
-
-
-
-
+iniciar_batalha(npc_selecionado)
